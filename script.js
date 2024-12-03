@@ -2,7 +2,7 @@
 let resultField = document.getElementById('result');
 
 function appendValue(value) {
-  if (resultField.value === "0") {
+  if (resultField.value === '0') {
     resultField.value = value;
   } else {
     resultField.value += value;
@@ -10,22 +10,35 @@ function appendValue(value) {
 }
 
 function clearDisplay() {
-  resultField.value = "0";
+  resultField.value = '0';
 }
 
 function backspace() {
-  resultField.value = resultField.value.slice(0, -1) || "0";
+  resultField.value = resultField.value.slice(0, -1) || '0';
 }
 
-function toggleSing() {
-  result.value = 
-Strong(-parseFloat(result.value));
+function toggleSign() {
+  resultField.value = -parseFloat(resultField.value);
 }
 
 function calculate() {
   try {
-    resultField.value = eval(resultField.value.replace('×', '*').replace('÷', '/'));
+    const expression = resultField.value.replace('×', '*').replace('÷', '/');
+    const result = evaluateExpression(expression);
+    resultField.value = result;
   } catch (e) {
-    resultField.value = "Error";
+    resultField.value = 'Error';
   }
+}
+
+function evaluateExpression(expression) {
+  // Regular expression to validate input and prevent invalid characters
+  const validCharacters = /^[0-9+\-*/.() ]+$/;
+  if (!validCharacters.test(expression)) {
+    throw new Error('Invalid characters in expression');
+  }
+
+  // Use Function constructor to create a safe evaluator
+  const safeFunction = new Function(`return (${expression})`);
+  return safeFunction();
 }
