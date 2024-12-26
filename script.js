@@ -42,3 +42,5 @@ function evaluateExpression(expression) {
   const safeFunction = new Function(`return (${expression})`);
   return safeFunction();
 }
+
+
