@@ -23,8 +23,8 @@ function toggleSign() {
 
 function calculate() {
   try {
-    const expression = resultField.value.replace('×', '*').replace('÷', '/');
-        // Handle percentage operator by converting it to a fraction
+    let expression = resultField.value.replace('×', '*').replace('÷', '/');
+    // Handle percentage operator by converting it to a fraction
     expression = expression.replace(/([0-9.]+)%/g, '($1/100)');
     const result = evaluateExpression(expression);
     resultField.value = result;
